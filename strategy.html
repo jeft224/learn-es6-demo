@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>策略模式 --- js设计模式</title>
+</head>
+<body>
+<div style="position: absolute;background:blue;" id="div">我是div</div>
+<script>
+    /*组合函数重构代码*/
+//    var perfS = function (salary) {
+//        return salary * 4;
+//    }
+//    var perfA = function (salary) {
+//        return salary * 3;
+//    }
+//    var perfB = function (salary) {
+//        return salary * 2;
+//    }
+//
+//    var calBonus = function (perfLevel, salary) {
+//        if(perfLevel === 'S'){
+//            return perfS(salary);
+//        }
+//        if(perfLevel === 'A'){
+//            return perfA(salary);
+//        }
+//        if(perfLevel === 'B'){
+//            return perfB(salary);
+//        }
+//    }
+
+    /*使用js策略模式重构代码*/
+    var strategies = {
+        'S':function (salary) {
+            return salary * 4;
+        },
+        'A':function (salary) {
+            return salary * 3;
+        },
+        'B':function (salary) {
+            return salary *2;
+        }
+    }
+    var calBonus = function (level, salary) {
+        return strategies[level](salary)
+    }
+
+    console.log('S' + calBonus('S',2000))
+    console.log('A' + calBonus('A',1000));
+
+    /*缓动算法*/
+    var tween = {
+        linear: function (t, b, c, d) {
+            return c * t / d + b;
+        },
+        easeIn: function (t, b, c, d) {
+            return c * (t /= d) * t + b;
+        },
+        strongEaseIn: function (t, b, c, d) {
+            return c * (t /= d) * t * t * t * t + b;
+        },
+        strongEaseOut: function (t, b, c, d) {
+            return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
+        },
+        sinEaseIn: function (t, b, c, d) {
+            return c * (t /= d) * t * t + b;
+        },
+        sinEaseOut: function (t, b, c, d) {
+            return c * ((t = t / d - 1) * t * t + 1) + b;
+        }
+    }
+
+    /*移动类*/
+    var Animate = function (dom) {
+        this.dom = dom;
+        this.startTime = 0;
+        this.startPos = 0;
+        this.endPos = 0;
+        this.propertyName = null ;
+        this.easing = null;
+        this.duration = null;
+    }
+    /*移动开始函数*/
+    Animate.prototype.start = function (propertyName, endPos, duration, easing) {
+        this.startTime =+new Date;
+        this.startPos = this.dom.getBoundingClientRect()[propertyName];
+        this.propertyName = propertyName;
+        this.endPos =endPos;
+        this.duration = duration;
+        this.easing = tween[easing];
+        console.log('startPos'+this.startPos);
+        console.log('startTime'+this.startTime);
+        var self = this ;
+        var timeId = setInterval(function () {
+            if(self.step() === false){
+                clearInterval(timeId);
+            }
+        },19);
+    }
+    /*帧函数*/
+    Animate.prototype.step = function () {
+        var t = +new Date;
+//        console.log('t'+t);
+        if(t >= this.startTime+this.duration){
+            this.update(this.endPos);
+            return false;
+        }
+        var pos = this.easing(t-this.startTime,this.startPos,this.endPos-this.startPos,this.duration);
+        this.update(pos);
+    }
+    /*更新元素位置的函数*/
+    Animate.prototype.update = function (pos) {
+//        console.log('pos'+pos);
+        this.dom.style[this.propertyName] = pos +'px';
+
+    }
+
+    var div = document.getElementById('div');
+    var animate = new Animate(div);
+    animate.start('left',500,1000,'strongEaseOut')
+</script>
+</body>
+</html>

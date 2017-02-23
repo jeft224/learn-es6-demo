@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>map</title>
+    <style>
+        button {
+            font-size: 50px;
+            margin:10px;
+        }
+    </style>
+</head>
+<body>
+
+
+<button>Snakes 🐍</button>
+<button>Cry 😂</button>
+<button>Ice Cream 🍦</button>
+<button>Flamin' 🔥</button>
+<button>Dancer 💃</button>
+
+
+<script>
+    const clickCounts = new Map();
+
+    const buttons = document.querySelectorAll('button');
+
+    buttons.forEach(button =>{
+        console.log("button"+button);
+        clickCounts.set(button,0);
+        console.log(clickCounts);
+        button.addEventListener('click',function(){
+            const val = clickCounts.get(this);
+            console.log(val);
+            clickCounts.set(this,val+1)
+            console.log(clickCounts);
+        })
+    })
+
+
+    /*map的循环函数方式*/
+    const dogs = new Map();
+    dogs.set('snickers',3)
+    dogs.set('sunny',2);
+    dogs.set('Hugo',10);
+    dogs.forEach((value,key) => console.log(value,key))
+
+    for(const [val,key] of dogs){
+        console.log(val,key)
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>generators</title>
+</head>
+<body>
+<script>
+    function* listPeople() {
+
+        let i = 0;
+        yield i;
+        console.log("第"+i);
+        i++;
+        yield i;
+        console.log("第"+i);
+        i++;
+        yield i;
+        console.log("第"+i);
+    }
+    const people = listPeople();
+    people.next();
+    people.next();
+    people.next();
+    people.next();
+
+</script>
+</body>
+</html>

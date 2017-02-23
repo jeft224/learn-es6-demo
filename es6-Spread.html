@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>es6 数组展开符</title>
+    <style>
+        body{
+            min-height: 100vh;
+            font-family:sans-serif;
+            background: #ffc600;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            color: white;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+        }
+        .jump span{
+            position: relative;
+            display: inline-block;
+            -webkit-transition: transform 0.1s;
+            -moz-transition: transform 0.1s;
+            -ms-transition: transform 0.1s;
+            -o-transition: transform 0.1s;
+            transition: transform 0.1s;
+            cursor: url("http://csscursor.info/source/santahand.png"),default;
+        }
+        .jump span:hover{
+            -webkit-transform: translateY(-20px) scale(2) rotate(10deg);
+            -moz-transform: translateY(-20px) scale(2) rotate(10deg);
+            -ms-transform: translateY(-20px) scale(2) rotate(10deg);
+            -o-transform: translateY(-20px) scale(2) rotate(10deg);
+            transform: translateY(-20px) scale(2) rotate(10deg);
+        }
+    </style>
+</head>
+<body>
+    <h2 class="jump">SPEADS!</h2>
+    <div class="people">
+        <p>Wes</p>
+        <p>Kait</p>
+        <p>Randy</p>
+    </div>
+</body>
+<script>
+    const jump = document.querySelector('.jump').textContent;
+    const array = jump.split('');
+    document.querySelector('.jump').innerText = '';
+    array.map(letter => {
+        const span = document.createElement('span');
+        span.innerHTML = letter;
+        document.querySelector('.jump').appendChild(span);
+    })
+
+
+    /*优化相当好的代码*/
+//    function words(word) {
+//        return [...word].map(letter => `<span>${letter}</span>`).join('');
+//    }
+//
+//    document.querySelector('.jump').innerHTML = words(jump);
+
+
+
+
+    const p = document.querySelectorAll('.people p');
+    const Parray = Array.from(p,person=> {
+        return person.textContent
+    });
+
+//    console.log(p.map(person => person.textContent))
+
+    console.log(Parray);
+
+
+        const deepDish = {
+            pizzasName:'Deep',
+            size:'Medium',
+            ingredients:['Marn','Ital Sau','Dough','Cheese']
+        }
+
+        const shoppingList = ['Milk','Flour',...deepDish.ingredients];
+
+
+        const comments = [
+            {id:209384,text:'i love js'},
+            {id:523423,text:'Cuuute'},
+            {id:623755,text:'you are so dumb'},
+            {id:188888,text:'i love dog '}
+        ]
+        const id = 623755;
+
+        console.log(comments.findIndex(comment => comment.id === id));
+
+
+//    const featured = ['Deep','Peo','Haven'];
+//    const specialty = ['Meatt','Sp Mar','Mar'];
+//    const pizzas = [...featured,'veg',...specialty]
+//
+//    const fridayPizzas = [...pizzas];
+//    const deepDish = {
+//        pizzasName:'Deep',
+//        size:'Medium',
+//        ingredients:['Marn','Ital Sau','Dough','Chese',...pizzas]
+//    }
+//    const inventors= ['Eins','Newton','Galleirin'];
+//    const newInventors = ['Musk','Jobs'];
+//
+////    const inventorsArray = [...inventors,...newInventors];
+//
+//    inventors.push(...newInventors);
+//
+//    const name = ['wes','bos'];
+//
+//    function SayHai(first,last) {
+//        alert(`Hey there ${first} ${last}`)
+//    }
+//    //es6用法
+//    SayHai(...name);
+//    //es5的用法
+//    SayHai.apply(null,name);
+</script>
+</html>
